@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/gcc/startup_MIMX8ML8_cm7.S
+
+/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/fsl_memcpy.S
+

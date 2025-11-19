@@ -1,0 +1,12 @@
+#!/bin/sh
+if [ -d "CMakeFiles" ];then rm -rf CMakeFiles; fi
+if [ -f "Makefile" ];then rm -f Makefile; fi
+if [ -f "build.ninja" ];then rm -f build.ninja; fi
+if [ -f "cmake_install.cmake" ];then rm -f cmake_install.cmake; fi
+if [ -f "CMakeCache.txt" ];then rm -f CMakeCache.txt; fi
+
+# Export all arguments, this will be picked up by CMakeLists.txt
+export BUILD_OPTIONS="$@"
+
+cmake -DCMAKE_TOOLCHAIN_FILE="../../../../../tools/cmake_toolchain_files/armgcc.cmake" -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=debug  .
+make -j 2>&1 | tee build_log.txt

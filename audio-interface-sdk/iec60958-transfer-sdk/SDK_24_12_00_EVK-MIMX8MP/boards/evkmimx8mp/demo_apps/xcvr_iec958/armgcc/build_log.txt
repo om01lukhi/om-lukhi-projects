@@ -1,0 +1,31 @@
+Scanning dependencies of target xcvr_iec958.elf
+[  8%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_sdma.c.obj
+[ 12%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/my_app.c.obj
+[ 20%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/components/uart/fsl_adapter_iuart.c.obj
+[ 20%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/pin_mux.c.obj
+[ 25%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_clock.c.obj
+[ 29%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_audiomix.c.obj
+[ 33%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/hardware_init.c.obj
+[ 37%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/clock_config.c.obj
+[ 41%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_common.c.obj
+[ 50%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/board.c.obj
+[ 50%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/system_MIMX8ML8_cm7.c.obj
+[ 50%] Building ASM object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/gcc/startup_MIMX8ML8_cm7.S.obj
+[ 54%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_common_arm.c.obj
+[ 58%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_gpio.c.obj
+[ 62%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_uart.c.obj
+[ 66%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_rdc.c.obj
+[ 70%] Building ASM object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/fsl_memcpy.S.obj
+[ 75%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/drivers/fsl_xcvr.c.obj
+[ 83%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/fsl_sbrk.c.obj
+[ 87%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/fsl_syscall_stub.c.obj
+[ 79%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/debug_console_lite/fsl_debug_console.c.obj
+[ 91%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/debug_console_lite/fsl_assert.c.obj
+[ 95%] Building C object CMakeFiles/xcvr_iec958.elf.dir/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/devices/MIMX8ML8/utilities/str/fsl_str.c.obj
+[100%] Linking C executable debug/xcvr_iec958.elf
+Memory region         Used Size  Region Size  %age Used
+    m_interrupts:         680 B         1 KB     66.41%
+          m_text:       31632 B       127 KB     24.32%
+          m_data:       19256 B       128 KB     14.69%
+         m_data2:        2992 B        16 MB      0.02%
+[100%] Built target xcvr_iec958.elf

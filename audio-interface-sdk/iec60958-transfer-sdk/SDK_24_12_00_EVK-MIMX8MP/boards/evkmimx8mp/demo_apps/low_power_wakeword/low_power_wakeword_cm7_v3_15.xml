@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm7_MIMX8ML8xxxLZ"/>
+    <definition extID="driver.audiomix.MIMX8ML8"/>
+    <definition extID="platform.drivers.clock.MIMX8ML8"/>
+    <definition extID="platform.drivers.iomuxc.MIMX8ML8"/>
+    <definition extID="platform.drivers.memory.MIMX8ML8"/>
+    <definition extID="CMSIS_DSP_Source.MIMX8ML8"/>
+    <definition extID="CMSIS_Include_core_cm.MIMX8ML8"/>
+    <definition extID="device.MIMX8ML8_CMSIS.MIMX8ML8"/>
+    <definition extID="device.MIMX8ML8_system.MIMX8ML8"/>
+    <definition extID="device.MIMX8ML8_startup.MIMX8ML8"/>
+    <definition extID="platform.drivers.common.MIMX8ML8"/>
+    <definition extID="platform.drivers.gpc_2.MIMX8ML8"/>
+    <definition extID="platform.drivers.gpt.MIMX8ML8"/>
+    <definition extID="platform.drivers.igpio.MIMX8ML8"/>
+    <definition extID="platform.drivers.ii2c.MIMX8ML8"/>
+    <definition extID="platform.drivers.iuart.MIMX8ML8"/>
+    <definition extID="platform.drivers.mu.MIMX8ML8"/>
+    <definition extID="platform.drivers.pdm_sdma.MIMX8ML8"/>
+    <definition extID="platform.drivers.pdm.MIMX8ML8"/>
+    <definition extID="platform.drivers.rdc.MIMX8ML8"/>
+    <definition extID="platform.drivers.sai_sdma.MIMX8ML8"/>
+    <definition extID="platform.drivers.sai.MIMX8ML8"/>
+    <definition extID="platform.drivers.sdma.MIMX8ML8"/>
+    <definition extID="platform.utilities.assert_lite.MIMX8ML8"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8ML8"/>
+    <definition extID="utility.str.MIMX8ML8"/>
+    <definition extID="utility.debug_console_lite.MIMX8ML8"/>
+    <definition extID="component.codec_i2c.MIMX8ML8"/>
+    <definition extID="driver.codec.MIMX8ML8"/>
+    <definition extID="component.codec_adapters.MIMX8ML8"/>
+    <definition extID="component.wm8962_adapter.MIMX8ML8"/>
+    <definition extID="driver.wm8962.MIMX8ML8"/>
+    <definition extID="component.i2c_adapter_interface.MIMX8ML8"/>
+    <definition extID="component.ii2c_adapter.MIMX8ML8"/>
+    <definition extID="component.iuart_adapter.MIMX8ML8"/>
+    <definition extID="driver.srtm.freertos.MIMX8ML8"/>
+    <definition extID="driver.srtm.MIMX8ML8"/>
+    <definition extID="component.rpmsg_endpoint.MIMX8ML8"/>
+    <definition extID="component.srtm_i2c_service.MIMX8ML8"/>
+    <definition extID="component.srtm_audio_service.MIMX8ML8"/>
+    <definition extID="component.srtm_i2c_codec_adapter.MIMX8ML8"/>
+    <definition extID="component.srtm_pdm_sdma_adapter.MIMX8ML8"/>
+    <definition extID="component.srtm_sai_sdma_adapter.MIMX8ML8"/>
+    <definition extID="middleware.multicore.rpmsg-lite.MIMX8ML8"/>
+    <definition extID="middleware.multicore.rpmsg-lite.ns.MIMX8ML8"/>
+    <definition extID="middleware.multicore.rpmsg-lite.freertos.MIMX8ML8"/>
+    <definition extID="middleware.multicore.rpmsg-lite.imx8mp_m7.MIMX8ML8"/>
+    <definition extID="middleware.audio_voice.components.voice_seeker.cm7.MIMX8ML8"/>
+    <definition extID="middleware.audio_voice.components.voice_seeker.rdsp_utilities_public.cm7.MIMX8ML8"/>
+    <definition extID="middleware.voice_spot.MIMX8ML8"/>
+    <definition extID="middleware.voice_spot.model.MIMX8ML8"/>
+    <definition extID="middleware.voice_spot.cm7_iMX8MP.MIMX8ML8"/>
+    <definition extID="middleware.freertos-kernel.MIMX8ML8"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMX8ML8"/>
+    <definition extID="middleware.freertos-kernel.config.MIMX8ML8"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimx8mp_low_power_wakeword_cm7" name="low_power_wakeword_cm7" device_core="cm7_MIMX8ML8xxxLZ" dependency="driver.audiomix.MIMX8ML8 platform.drivers.clock.MIMX8ML8 platform.drivers.iomuxc.MIMX8ML8 platform.drivers.memory.MIMX8ML8 CMSIS_DSP_Source.MIMX8ML8 CMSIS_Include_core_cm.MIMX8ML8 device.MIMX8ML8_CMSIS.MIMX8ML8 device.MIMX8ML8_system.MIMX8ML8 device.MIMX8ML8_startup.MIMX8ML8 platform.drivers.common.MIMX8ML8 platform.drivers.gpc_2.MIMX8ML8 platform.drivers.gpt.MIMX8ML8 platform.drivers.igpio.MIMX8ML8 platform.drivers.ii2c.MIMX8ML8 platform.drivers.iuart.MIMX8ML8 platform.drivers.mu.MIMX8ML8 platform.drivers.pdm_sdma.MIMX8ML8 platform.drivers.pdm.MIMX8ML8 platform.drivers.rdc.MIMX8ML8 platform.drivers.sai_sdma.MIMX8ML8 platform.drivers.sai.MIMX8ML8 platform.drivers.sdma.MIMX8ML8 platform.utilities.assert_lite.MIMX8ML8 platform.utilities.misc_utilities.MIMX8ML8 utility.str.MIMX8ML8 utility.debug_console_lite.MIMX8ML8 component.codec_i2c.MIMX8ML8 driver.codec.MIMX8ML8 component.codec_adapters.MIMX8ML8 component.wm8962_adapter.MIMX8ML8 driver.wm8962.MIMX8ML8 component.i2c_adapter_interface.MIMX8ML8 component.ii2c_adapter.MIMX8ML8 component.iuart_adapter.MIMX8ML8 driver.srtm.freertos.MIMX8ML8 driver.srtm.MIMX8ML8 component.rpmsg_endpoint.MIMX8ML8 component.srtm_i2c_service.MIMX8ML8 component.srtm_audio_service.MIMX8ML8 component.srtm_i2c_codec_adapter.MIMX8ML8 component.srtm_pdm_sdma_adapter.MIMX8ML8 component.srtm_sai_sdma_adapter.MIMX8ML8 middleware.multicore.rpmsg-lite.MIMX8ML8 middleware.multicore.rpmsg-lite.ns.MIMX8ML8 middleware.multicore.rpmsg-lite.freertos.MIMX8ML8 middleware.multicore.rpmsg-lite.imx8mp_m7.MIMX8ML8 middleware.audio_voice.components.voice_seeker.cm7.MIMX8ML8 middleware.audio_voice.components.voice_seeker.rdsp_utilities_public.cm7.MIMX8ML8 middleware.voice_spot.MIMX8ML8 middleware.voice_spot.model.MIMX8ML8 middleware.voice_spot.cm7_iMX8MP.MIMX8ML8 middleware.freertos-kernel.MIMX8ML8 middleware.freertos-kernel.heap_4.MIMX8ML8 middleware.freertos-kernel.config.MIMX8ML8" category="demo_apps">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>MCUXPRESSO_SDK</value>
+          <value>CPU_MIMX8ML8DVNLZ</value>
+          <value>CPU_MIMX8ML8DVNLZ_cm7</value>
+          <value>CPU_MIMX8ML8CVNKZ</value>
+          <value>CPU_MIMX8ML8CVNKZ_cm7</value>
+          <value>SRTM_DEBUG_MESSAGE_FUNC=DbgConsole_Printf</value>
+          <value>SRTM_DEBUG_VERBOSE_LEVEL=SRTM_DEBUG_VERBOSE_WARN</value>
+          <value>NOT_CONFIG_CLK_ROOT=1</value>
+          <value>SRTM_PDM_SDMA_ADAPTER_USE_HWVAD=0</value>
+          <value>SRTM_PDM_SDMA_ADAPTER_FORCE_LOCAL_AND_EXTRA_BUFFERS=1</value>
+          <value>DEMO_SAI_TX_CONFIG_StopOnSuspend=1</value>
+          <value>DEMO_SAI_TX_CONFIG_UseLocalBuf=0</value>
+          <value>SRTM_SAI_CONFIG_Rx_Enabled=0</value>
+          <value>SRTM_SAI_CONFIG_SupportLocalBuf=0</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>MCUX_META_BUILD</value>
+          <value>DISABLEFLOAT16</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>CODEC_MULTI_ADAPTERS=1</value>
+          <value>CODEC_WM8962_ENABLE</value>
+          <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -fno-builtin -mthumb</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="gnu.c.link.option.group" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+    </include_paths>
+    <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="../../../../devices/MIMX8ML8" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="all_lib_device.cmake"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="low_power_wakeword.c"/>
+      <files mask="voice_engine_common.c"/>
+      <files mask="voice_engine_voiceseeker_voicespot.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="low_power_wakeword.h"/>
+      <files mask="voice_engine_common.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="srtm_config.h"/>
+      <files mask="app_srtm.h"/>
+      <files mask="FreeRTOSConfigBoard.h"/>
+      <files mask="rsc_table.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="app_srtm.c"/>
+      <files mask="rsc_table.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="lpm.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="lpm.h"/>
+      <files mask="rpmsg_config.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="FreeRTOSConfig.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="remoteproc.h"/>
+    </source>
+    <source path="armgcc" project_relative_path="MIMX8ML8/armgcc" type="linker" toolchain="armgcc">
+      <files mask="MIMX8ML8xxxxx_cm7_lpv_ram.ld"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+      <files mask="hardware_init.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+      <files mask="app.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="FreeRTOSConfig_Gen.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="mcux_config.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.md"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="example_board_readme.md"/>
+    </source>
+  </example>
+</ksdk:examples>

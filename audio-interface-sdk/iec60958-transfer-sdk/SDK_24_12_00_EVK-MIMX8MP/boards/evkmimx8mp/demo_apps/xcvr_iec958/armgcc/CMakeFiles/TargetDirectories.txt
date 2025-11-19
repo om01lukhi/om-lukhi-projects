@@ -1,0 +1,3 @@
+/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/armgcc/CMakeFiles/xcvr_iec958.elf.dir
+/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/armgcc/CMakeFiles/edit_cache.dir
+/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/demo_apps/xcvr_iec958/armgcc/CMakeFiles/rebuild_cache.dir
