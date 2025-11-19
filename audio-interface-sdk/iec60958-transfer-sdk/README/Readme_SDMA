@@ -1,0 +1,169 @@
+#README for SDMA Data Transfer
+
+1. Why do we need to use SDMA ?
+	In the process of transmitting iec60958 over S/PDIF communication, we need to bypass ALSA Framework which has major contribution in creating frames from raw PCM data and putting the readymade
+	frames into XCVR Tx FIFO of imx8mp board, that further gets transmitted via S/PDIF optical wires to imx8mm spdif receiver. While bypassing ALSA and putting pre made iec60958 frames into Tx FIFO
+	using MCUX SDK, we observed following things:
+	 i. We received ISR bit 15-DMA Write Request interrupt enabled.
+        ii. ISR bit 6-FIFO OF/UF Error Interrupt
+       iii. Also ISR bit 9-DMAC No Data Received Interrupt
+
+	These observations indicated that DMA Controller was not receiving any data in expected time, so data was not being transfered to Tx FIFO by SDMA and FIFO was indicating underflow interrupt due
+	to this. So rather than manually putting data into tx fifo of xcvr driver which probably also was not accessible we needed to set SDMA that can be used to transfer frames from RAM memory to Tx
+	FIFO and we can get successful S/PDIF communication between two boards.
+
+2. Basics of Smart Direct Memory Access (SDMA)
+	-SDMA controller provides software based virtual-DMA flexibility and enables high speed data transfer between IO peripherals and internal/external memories by off loading main processor.
+	-Main Architecture of SDMA consists of custom RISC core along with RAM(8KB), ROM(4KB), DMA Units and Scheduler.
+	-SDMA core executes short routines that perform DMA transfer that is also called as scripts.
+	-ROM contains startup script (BOOT Code) and other common utilities, which are referenced by the scripts resides in RAM
+	-RAM has mainly two area : 1. Context Area, 2.Script Area
+		1. Context Area is used for storing runtime state (context) of each channel like pointers, registers, status ; allows SDMA to switch between multiple channels
+		2. Script Area is kind of microcode or firmware that defines that how the DMA transfer should behave or transfer logic (like peripheral to memory, memory to memory, etc).
+	-There are total 32 channels and each has its own context, can be mapped to different DMA request and its own firmware routine.
+
+	-The scheduler monitors and detects DMA requests, mapping them to channels, and mapping individual channels to a pre-configured priority.
+
+
+
+	Priority concepts and how channel gets assigned to DMA requests ?
+
+		The scheduler detects devices that need service through its 48 DMA request inputs.The 48 DMA requests that are connected to the scheduler come from a variety of sources. The "receive
+		register full" and "transmit register empty" signals found in the UART and USB ports are typical examples of DMA requests that can be connected to the SDMA.
+
+		After a request is detected, the scheduler determines the channels that are triggered by this request and marks them as pending in the "Channel Pending (EP)" register. The priorities of
+		all the pending channels are continuously evaluated in order to update the highest pending priority. The channel pending flag is cleared by the channel script when the transfer has
+		completed.
+
+		The Arm platform control block contains the control registers used to configure the 32 individual channels. There are 48 Channel Enable registers, and every register maps one DMA
+		request to any desired combination of channels. The 32 Priority registers are used to assign a programmable 1-of-7 level priority to every possible channel. This block also contains all
+		other control registers that the Arm platform can access.
+
+		Basically if pending channels having priority higher than the current channel is pending, then current channel execution gets preempted and channel with higher priority gets starts
+		executing, if channels with same priority are pending then channel number with higher index gets executed before the other one. For example if channel number 3 and 6 both have priority
+		3 then channel number 6 will gets executed first as it has higher index number.
+
+3. SDMA Functional Description
+	SDMA Core:
+	-The SDMA core is a customized RISC-like processor that is specifically developed to control DMA units and perform L1 tasks like byte-stuffing or framing.
+	-32 bits registers, 16 bits instructions
+	-8 General purpose registers, 4 Flags(T, LM, SF, DF), four PCU reigsters (PC, RPC, SPC, EPC) that can address 16,384 16 bit instructions
+		The Program Counter (PC) contains the address of the current instruction.
+		The Return Program Counter (RPC) contains the address of the instruction that follows a jump to the subroutine.
+		The Start Program Counter (SPC) contains the address of the first instruction of the current hardware loop.
+		End Program Counter (EPC) contains the address of the last instruction of the current hardware loop.
+	-The ALU has two operands: any general register and either a second general register or an immediate value. The result is always stored into the first general register
+	-Instruction types : Standard, ldf/stf, ld/st, Branch, Loop,Modified Load or Store
+        -PCU states : Program, Data, Change of flow, Error in Loop, Debug, Functional Unit, Sleep, Save, Program in sleep
+
+        Scheduler:
+        The scheduler is a hardware-based design used to coordinate the timely execution of 32 virtual DMA channels by the SDMA core on the basis of channel status and priority.
+	The scheduler performs the following functions:
+	• Monitors, detects, and registers the occurrence of any one of the 48 DMA requests
+	• Links a specific request to a channel or group of channels (channel mapping)
+	• Ignores requests that are not mapped to a previously configured channel
+	• Maintains a list of all the channels that are requesting service
+	• Assigns a pre-programmed priority level (1 of 7) to every channel requesting service
+	• Detects and flags overrun/underrun conditions
+
+
+         A channel overflow occurs when a DMA request requires service from channel n by setting bit n of the register EP, but this bit is already set, meaning channel n is already pending. This can
+         come from an overrun/underrun condition.
+         Several channels may be runnable at any given time. The ith channel is runnable if (and only if) the condition below is true:
+         (HE[i] or HO[i]) and (DO[i]) and (EP[i] or EO[i])
+		where, HE= host channel enable, HO=host override, EP=externally triggered trigger pending, EO=externally triggered channel override flags
+
+
+         Channel Decision Tree
+         The next channel number is computed from the runnable channels list, the current channel number, and their respective priorities.
+	 It is re-evaluated every cycle, but is only used when the current channel yields or terminates by executing a yield, yieldge, or done instruction.
+	 The decision tree is based on the selection of the runnable channel that has the highest priority.
+	 The highest priority channel is selected according to the following rules:
+		• Runnable channels are sorted by priority.
+		• If one of the channels with the highest priority had been preempted by a channel with a higher priority, but did not want to yield to a channel of the same priority (for example, it
+		executed a yield, not a yieldge), it is elected as the next channel.
+		• The channels that belong to the highest priority group are sorted by their number and the channel that has the highest number in this group becomes the next channel. For example, if
+		priorities are the same, channel 31 will be selected before channel 30.
+
+
+	Context Switching :
+
+		On execution of a done or yield(ge) instruction, the current channel may be changed either because it has finished (which necessarily happens when the done instruction is
+		executed), or it was preempted by a higher priority channel (which is possible but not systematic when the yield(ge) is executed). Upon a channel change the SDMA goes through a context
+		switch procedure.
+		When the current channel yields or ends, the context for that channel is saved into the context RAM locations for that channel. When the next channel starts running, its context is
+		first restored from RAM. Since context RAM is not yet initialized by reset, there will be no context restore at the beginning of the first channel (bootload channel) run after reset. It
+		is expected that the bootload channel will be used to initialize the context for all other channels. When the bootload channel finishes running or yields, SDMA will enter its SAVE state
+		and save that channel's context into RAM. Then, if the bootload channel is called again later, the context will be restored from RAM when the channel starts again.
+
+		Context Switch Modes: dynamic, dynamic with no loop, dynamic power, static
+
+         Functional Units: 1. Burst DMA Unit, Peripheral DMA Unit
+
+		1. Burst DMA Unit
+			Burst DMA Registers: Memory Source Address(MSA), Memory Destination Address(MDA), Memory Data(MD), Memory Setup(MS)
+		2. Peripheral DMA Unit
+			Registers: PD, PSA, PDA, PS
+
+
+#Readme For Building SDMA_memory-to-memory.c app from imx8mp MCUx SDK
+
+1. Get into directory driver example / sdma / memory to memory /
+
+	sudo cd <location_of_SDK_of_EVK-MIMX8MP>/boards/evkmimx8mp/driver_examples/sdma/memory_to_memory
+
+	where ls command gives list of different source
+	filesom@om:/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/driver_examples/sdma/memory_to_memory$ ls
+	app.h   board.c  clock_config.c  empty_rsc_table.c        hardware_init.c  pin_mux.c  readme.md                sdma_memory_to_memory_cm7_v3_15.xml
+	armgcc  board.h  clock_config.h  example_board_readme.md  mcux_config.h    pin_mux.h  sdma_memory_to_memory.c
+
+	where sdma_memory_to_memory.c application can be observed that use different function of fsl_sdma.c driver to init sdma for writing 4 integers from one memory place to another without using
+	main processor or by using direct memory access data transfer
+
+2. Given two commands are used to set up your environment for cross-compiling ARM firmware or code using the ARM GNU toolchain.
+
+	export ARMGCC_DIR=/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi
+	export PATH=$PATH:/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin
+
+3. Enter into armgcc directory
+	cd armgcc/
+
+4. Enter below command to build sdma_memory_to_memory app:
+	./build_debug.sh
+
+5. Now new directory named debug should be observed in directory armgcc
+	Check with ls command, debug contains following files:
+
+       om@om:/hdd1/om/project/8mp-spdif-iec60958/SDK_24_12_00_EVK-MIMX8MP/boards/evkmimx8mp/driver_examples/sdma/memory_to_memory/armgcc/debug$ ls
+	sdma_memory_to_memory.bin  sdma_memory_to_memory_cm7.elf
+
+6. Copy sdma_memory_to_memory.bin file into boot directory of image for imx board
+	sudo cp debug/sdma_memory_to_memory.bin /media/om/boot/
+
+7. Enter the SD card with this bin file into board, complete power and minicom setup, Below three commands after u-boot are used to get SDK run on the board:
+
+	sudo minicom -D /dev/ttyUSB2/
+In new tab:
+	sudo minicom -D /dev/ttyUSB3/      (as cortex M sends output data or debugging logs in next minicom tab)
+
+After U-boot:
+	fatload mmc 1:1 0x48000000 sdma_memory_to_memory.bin
+	cp.b 0x48000000 0x7e0000 0x20000
+	bootaux 0x7e0000
+
+
+That shows output in next tab as given below:
+
+SDMA memory to memory transfer example begin.
+
+Destination Buffer:
+0       0       0       0
+SDMA memory to memory transfer example finish.
+Destination Buffer:
+1       2       3       4
+
+
+Result is that: Destination buffer was filled with 4 bytes 1,2,3,4 without loading main processor and using SDMA.
+
+
+
