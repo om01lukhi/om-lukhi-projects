@@ -1,4 +1,5 @@
 Hi there, I'm Om Lukhi 👋 an Electronics Engineer
+
 Welcome to my git account !!
 
 I’m an engineer passionate about building systems from the ground up—whether it involves designing precise signal-generation circuits, researching display-driver behavior, or developing complete industrial SDKs for audio transport. My work combines embedded firmware, low-level driver development, digital audio protocols, and hardware–software integration, with a focus on creating reliable and efficient real-time systems.
